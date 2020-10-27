@@ -19,6 +19,7 @@ shared:
 client:
   read_local_logs: true
   show_confirmation_questions: false
+  max_status_height: null
 
 daemon:
   default_parallel_tasks: 1
@@ -40,6 +41,7 @@ daemon:
 
 - `read_local_logs` If the client runs as the same user (and on the same machine) as the daemon, logs don't have to be sent via the socket but rather read directly.
 - `show_confirmation_questions` The client will print warnings that require confirmation for different critical commands.
+- `max_status_height` [int|null] If a number X is given, all table rows in the `status` subcommand, which have more than X lines will be truncated.
 
 ### Daemon
 
