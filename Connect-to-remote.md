@@ -1,5 +1,5 @@
 Running `pueued` on a server and wanting to check on the current progress without a login shell is a common scenario.
-The best solution (for now) is to bind the remote port/socket to a local port/socket.\
+The best solution (for now) is to bind the remote port/socket to a local port/socket.
 
 **Reminder:**
 

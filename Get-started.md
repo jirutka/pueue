@@ -47,7 +47,7 @@ To add a command just write: `pueue add sleep 60`\
 If you want to add flags to the command, you can either:
 
 - add `--` => `pueue add -- ls -al`
-- surround the command with a string `pueue add 'ls -al'`
+- Pass the command as a string `pueue add 'ls -al'`
 
 The command will then be added and scheduled for execution, as if you executed it right now and then.
 For normal operation it's recommended to add an alias to your shell's rc.\
@@ -73,17 +73,16 @@ Now there'll always be up to three tasks running in parallel.
 ### Pause, resume and start tasks
 
 Without any parameters, the `pause` subcommand pauses all running tasks and the daemon itself.
-A pause daemon won't start any new tasks, until it's started again.
+A paused daemon won't start any new tasks, until it's started again.
 
 To resume normal operation, just write `pueue start`.
 This will continue all paused tasks and the daemon will continue starting tasks.
 
-However, you can also pause specific tasks, without affecting the daemon or any other tasks.
+However, you can also pause specific tasks, without affecting the daemon's state or any other tasks.
 Just add the id of the this task as a parameter, e.g. `pueue pause 1`.
 It can be resumed the same way with the `start` command.
 
-`start` can also force tasks to be started.
-This will ignore any limitations on parallel tasks and just spawn the process.
+`start` can also force tasks to be started, which ignores any constraints on parallel tasks.
 
 ### Manipulate multiple tasks at once
 
@@ -104,14 +103,14 @@ As an example, you can
 - Set a delay. The task will be scheduled after e.g. 5 hours.
 - force a start. The task will be started immediately.
 
-## Common pitfalls and debuging
+## Common pitfalls and debugging
 
 ## A command does not behave like expected
 
-**First thing to do:** Try to run the command without adding it to Pueue.
+**First step:** Try to run the command without adding it to Pueue.
 If this fails, it's not a problem with Pueue.
 
-**Second thing** to do when debugging any problems with running/failing processes, is to look at the process output:
+**Second step** is to look at the process output:
 
 This can be done via `pueue log $task_id`.
 You can also get a live view of the output with `pueue follow $task_id`.
@@ -120,7 +119,7 @@ Add the `-e` flag, if you want to see the error output.
 ### The command formatting seems to be broken
 
 Pueue takes your input and uses it exactly as is to create a new `bash -c $command` in the background.  
-If your command contains spaces or characters that need escaping, you might need to encapsulate it into a string:
+If your command contains spaces or characters that need escaping, you might need to encapsulate it as a string:
 
 ```bash
 pueue add -- ls -al "/tmp/this\ is\ a\ test\ directory"
