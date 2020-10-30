@@ -1,4 +1,4 @@
-Running `pueued` on a server and wanting to check on the current progress without having to `ssh` onto the machine is a common scenario.
+Running `pueued` on a server and wanting to check on the current progress without a login shell is a common scenario.
 The best solution (for now) is to bind the remote port/socket to a local port/socket.\
 
 **Reminder:**
@@ -28,6 +28,13 @@ Unix-socket to unix-socket is of course also possible:
 ```bash
 ssh -L /tmp/local.socket:/home/$REMOTE_USER/.local/share/pueue/pueue_$REMOTE_USER.sock $REMOTE_USER@yourhost
 ```
-
 Just connect via `pueue -u /tmp/local_socket status`.
+
+## Run Commands through ssh
+
+```bash
+ssh target pueue status
+```
+
+
 
