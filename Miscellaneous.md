@@ -58,6 +58,14 @@ callback: '/path/to/callback "{{id}}" "{{command}}" "{{path}}" "{{result}}" "{{g
 Shell completion files can be created on the fly with `pueue completions $shell $directory`.
 There's also a `build_completions.sh` script, which creates all completion files in the `utils/completions` directory.
 
+Here's an example of where those files should be placed in Arch-Linux:
+
+- Zsh: `/usr/share/zsh/site-functions/_pueue`
+- Bash: `/usr/share/bash-completion/completions/pueue.bash`
+- Fish: `/usr/share/fish/completions/pueue.fish`
+
+The paths might differ for your Linux distribution, so please double-check those paths.
+
 ## Scripting
 
 When calling pueue commands in a script, you might need to sleep for a short amount of time for now.
