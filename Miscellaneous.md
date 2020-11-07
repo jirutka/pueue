@@ -22,7 +22,7 @@ If you want multiple aliases in a single task, it's probably best to either crea
 ## Callbacks
 
 You can specify a callback that will be called every time a task finishes.
-The callback can be parameterized with some variables.
+The callback can be parameterized in the `pueue.yml` file in the `daemon` section with some variables.
 
 These are the available variables that can be used to create a command:
 
@@ -52,6 +52,8 @@ Depending on how complex your callback becomes it might make sense to put into a
 ```yaml
 callback: '/path/to/callback "{{id}}" "{{command}}" "{{path}}" "{{result}}" "{{group}}" "{{start}}" "{{end}}" "{{enqueue}}"'
 ```
+
+Make sure to restart the daemon after you make changes to `pueue.yml`.
 
 ## Shell completion files
 
