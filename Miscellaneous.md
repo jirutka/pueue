@@ -30,6 +30,7 @@ These are the available variables that can be used to create a command:
 - `{{ command }}`
 - `{{ path }}`
 - `{{ result }}` (Success, Killed, etc.)
+- `{{ exit_code }}` The shell exit code (0-255, can be `None` for killed/unspawned processes)
 - `{{ group }}`
 - `{{ start }}` (times are UNIX timestamps or empty)
 - `{{ end }}`
