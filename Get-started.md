@@ -56,6 +56,8 @@ E.g.: `alias pad='pueue add --'`
 Surrounding a command with quotes is also required, if your command contains escaped characters.\
 For instance `pueue add ls /tmp/long\ path` will result in the execution of `sh -c ls /tmp/long path`, which will then break, as the escaped space is not passed to Pueue.
 
+If you're having trouble, please take a look at the [common pitfalls](https://github.com/Nukesor/pueue/wiki/Common-Pitfalls-and-Debugging) page.
+
 ### See what's going on
 
 To get the status of currently running commands, just type `pueue status`.\

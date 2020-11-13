@@ -1,7 +1,9 @@
 ## A command does not behave like expected
 
-**First step:** Try to run the command without adding it to Pueue.
-Do this by calling `sh -c '$COMMAND'` instead of `pueue add '$COMMAND'`.
+#### First step
+
+Try to run the command without adding it to Pueue.\
+Do this by calling `sh -c '$COMMAND'` instead of `pueue add '$COMMAND'`.\
 If this fails, it's not a problem with Pueue, but the command or the shell's features itself.
 
 Some examples of what can go wrong:
@@ -10,7 +12,9 @@ Some examples of what can go wrong:
 - The system shell in Ubuntu 18.04, doesn't support the `&>` parameter, which is interpreted as `&` and detaches processes. Use `2>&1` instead.
 
 
-**Second step** is to look at the process output:
+#### Second step
+
+Look at the process output:
 
 This can be done via `pueue log $task_id`.
 You can also get a live view of the output with `pueue follow $task_id`.
@@ -18,14 +22,14 @@ Add the `-e` flag, if you want to see the error output.
 
 ### The command formatting seems to be broken
 
-Pueue takes your input and uses it exactly as is to create a new `bash -c $command` in the background.  
+Pueue takes your input and uses it exactly as is to create a new `sh -c $command` in the background.  
 If your command contains spaces or characters that need escaping, you might need to encapsulate it as a string:
 
 ```bash
 pueue add -- ls -al "/tmp/this\ is\ a\ test\ directory"
 ```
 
-Without quotes, the character escaping won't be transferred to the `bash -c $command`, as it's already removed by calling it from the current shell.
+Without quotes, the character escaping won't be transferred to the `sh -c $command`, as it's already removed by calling it from the current shell.
 
 ### A process waits for input
 
