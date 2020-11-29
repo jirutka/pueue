@@ -11,6 +11,7 @@ pub mod client;
 pub mod commands;
 pub mod output;
 pub mod output_helper;
+pub mod ui;
 
 use crate::cli::{CliArguments, Shell, SubCommand};
 use crate::client::Client;
@@ -51,8 +52,17 @@ async fn main() -> Result<()> {
     // Try to read settings from the configuration file.
     let settings = Settings::new(true, &opt.config)?;
 
+    // This is the entry point for the interactive UI
+    // The logic for the UI is completely cut off from the rest of the client.
+    if let SubCommand::Ui = &opt.cmd {
+        let socket = Client::connect(&settings, &opt);
+
+        return Ok(());
+    }
+
     // Create client to talk with the daemon and connect.
     let mut client = Client::new(settings, opt).await?;
+
     client.start().await?;
 
     Ok(())

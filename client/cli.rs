@@ -323,6 +323,9 @@ pub enum SubCommand {
         /// The output directory to which the file should be written.
         output_directory: PathBuf,
     },
+
+    /// Start the tui-rs UI mode
+    Ui,
 }
 
 #[derive(Clap, Debug, PartialEq)]

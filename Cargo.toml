@@ -55,6 +55,7 @@ clap = "3.0.0-beta.2"
 clap_generate = "3.0.0-beta.2"
 crossterm = "^0.18"
 comfy-table= "^1"
+tui = { version = "0.13", features = ["crossterm"] }
 tempfile = "^3"
 
 [target.'cfg(not(windows))'.dependencies]

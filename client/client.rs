@@ -32,8 +32,19 @@ pub struct Client {
 }
 
 impl Client {
-    /// Connect to the daemon, authorize via secret and return a new initialized Client.
+    /// Create a new client.
+    /// This also sets up a connection to the daemon
     pub async fn new(settings: Settings, opt: CliArguments) -> Result<Self> {
+        let socket = Client::connect(&settings, &opt).await?;
+        Ok(Client {
+            opt,
+            settings,
+            socket,
+        })
+    }
+
+    /// Connect to the daemon, authorize via secret and return a new initialized Client.
+    pub async fn connect(settings: &Settings, opt: &CliArguments) -> Result<Socket> {
         // // Commandline argument overwrites the configuration files values for address
         // let address = if let Some(address) = opt.address.clone() {
         //     address
@@ -63,14 +74,10 @@ impl Client {
         send_bytes(&secret, &mut socket).await?;
         let hello = receive_bytes(&mut socket).await?;
         if hello != b"hello" {
-            bail!("Daemon went away after initial connection. Did you use the correct secret?")
+            bail!("Daemon went away after initial connection. Did you use the correct secret?");
         }
 
-        Ok(Client {
-            opt,
-            settings,
-            socket,
-        })
+        Ok(socket)
     }
 
     /// This is the function where the actual communication and logic starts.
@@ -414,6 +421,7 @@ impl Client {
             SubCommand::Restart { .. } => bail!("Restarts have to be handled earlier"),
             SubCommand::Edit { .. } => bail!("Edits have to be handled earlier"),
             SubCommand::Wait { .. } => bail!("Wait has to be handled earlier"),
+            SubCommand::Ui => bail!("UI entry point has to be handled earlier"),
         }
     }
 }
