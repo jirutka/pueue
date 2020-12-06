@@ -55,7 +55,8 @@ async fn main() -> Result<()> {
     // This is the entry point for the interactive UI
     // The logic for the UI is completely cut off from the rest of the client.
     if let SubCommand::Ui = &opt.cmd {
-        let socket = Client::connect(&settings, &opt);
+        let socket = Client::connect(&settings, &opt).await?;
+        ui::run(settings, opt, socket).await?;
 
         return Ok(());
     }
