@@ -18,9 +18,9 @@ use pueue::state::State;
 use crate::cli::CliArguments;
 use crate::commands::get_state;
 
-pub struct App {
-    pub selected_task: usize,
-}
+mod app;
+
+use app::App;
 
 pub async fn run(settings: Settings, opt: CliArguments, mut socket: Socket) -> Result<()> {
     // Tui initialization
@@ -32,17 +32,20 @@ pub async fn run(settings: Settings, opt: CliArguments, mut socket: Socket) -> R
     enable_raw_mode()?;
 
     // Create app to store some state
-    let mut app = App { selected_task: 0 };
+    let mut app = App {
+        selected_task: 0,
+        task_ids: Vec::new(),
+    };
     let update_time = Duration::from_millis(2000);
     let mut first = true;
 
     loop {
-        // `poll()` waits for an `Event` for a given time period
+        // `poll()` waits for an `Event` for a given time period.
         if !first && poll(update_time)? {
             match read()? {
                 Event::Key(event) => match event.code {
-                    KeyCode::Char('j') | KeyCode::Down => app.selected_task -= 1,
-                    KeyCode::Char('k') | KeyCode::Up => app.selected_task += 1,
+                    KeyCode::Char('k') | KeyCode::Up => app.previous(),
+                    KeyCode::Char('j') | KeyCode::Down => app.next(),
                     KeyCode::Char('q') => break,
                     _ => (),
                 },
@@ -51,6 +54,7 @@ pub async fn run(settings: Settings, opt: CliArguments, mut socket: Socket) -> R
             }
         }
         let state = get_state(&mut socket).await?;
+        app.update_task_ids(state.tasks.keys().cloned().collect());
 
         terminal.draw(|frame| {
             // Split the layout into the task list on the left and the rest
