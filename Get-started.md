@@ -94,13 +94,26 @@ For instance, you can look at specific logs like this:\
 
 This also works with your shell's range parameter, e.g. `pueue log {0..3} 15 19`.
 
-### Dependencies, delays, immediate
+### Dependencies
 
-There are multiple ways to specify when a command should be executed.
+Pueue allows to specify dependencies for tasks.
+A task will only be executed if all dependencies were successful.
+
+A dependency can be specified by using the `--after/-a` flag on the `add` command.
+
+It is advised to use this in combination with the `pause_on_failure` setting.
+This will prevent all dependant tasks of a failed task to fail as well. \
+Instead, one can now go ahead, debug/fix the failed task and `restart` it with the `--in-place` flag.
+
+Any dependency handling will then continue as expected without breaking the whole dependency chain.
+
+
+### Delays and immediate
+
+There are multiple other ways to specify when a command should be executed.
 Check the help text of the `add` subcommand to see all options.
 
-As an example, you can
+As an example, you can:
 
-- Specify dependencies. The task will only be executed if all dependencies were successful.
 - Set a delay. The task will be scheduled after e.g. 5 hours.
 - force a start. The task will be started immediately.
